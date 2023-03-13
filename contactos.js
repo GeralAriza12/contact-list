@@ -23,9 +23,9 @@ function imprimeContacto (){
 console.log(imprimir());
 
 // Otra forma de hacer function...
-// const imprimir2 = (contactos)=>{
-//     contactos.push("David Nuñez", "Maria Cruz");
-//     return contactos;
-// }
-// console.log(imprimir2(contactos));
+const imprimir2 = (contactos)=>{
+    contactos.push("David Nuñez", "Maria Cruz");
+    return contactos;
+}
+console.log(imprimir2(contactos));
 
