@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>contact-list</title>
+    <link rel="stylesheet" href="styles.css" type="text/css">
+    <script src="https://kit.fontawesome.com/68a2f3517a.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    <div id="padre">
+        <h1>LISTA DE CONTACTOS</h1>
+    <div id="hijo1">
+        <div class="cajas">
+            <form id="form">
+                <div class="formulario">
+                    <label for="">Nombre</label><div id="errorNom"></div>
+                    <input id="nombre" type="text" class="inputForm" placeholder="Ej. Geraldine">
+                    <span class="linea"></span>
+                </div>
+                <div class="formulario">
+                    <label for="">Apellidos</label><div id="errorApe"></div>
+                    <input id="apellido" type="text" class="inputForm" placeholder="Ej. Ariza Perez">
+                    <span class="linea"></span>
+                </div>
+                <div class="formulario">
+                    <label for="">Teléfono</label><div id="errorTel"></div>
+                    <input id="telefono" type="text" maxlength="10" class="inputForm" placeholder="000-000-0000">
+                    <span class="linea"></span>
+                </div>
+                <div class="formulario">
+                    <label for="">Ubicación</label><div id="errorUbi"></div>
+                    <input id="ubicacion" type="text" class="inputForm" placeholder="Ej. Bogotá">
+                    <span class="linea"></span>
+                </div>
+                <button id="botonAdd"><i class="fa-solid fa-user-plus fa-2x" style="color:#00ff40;"></i></button>   
+            </form>
+        </div>
+        <div class="cajas">
+            <form action="">
+                <div id="buscar">
+                    <label for="">Buscar contacto</label>
+                    <input type="text" id="inputBuscar" placeholder="Buscar un contacto" >
+                    <button>Buscar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="table">
+        <table>
+            <tbody id="tbody">
+
+            </tbody>
+        </table>
+    </div>
+    <script src="./contactos.js"></script>
+</body>
+</html>

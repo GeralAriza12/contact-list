@@ -1,120 +1,149 @@
-//Lista de contactos
-const contactos = [
-    {
-        id: 1,
-        nombres: "Lorena",
-        apellisdos: "Ariza",
-        telefono: 3120876816,
-        ubicacion: {
-            ciudad: "Colombia",
-            direccion: ""
-        },
-    },
-    {
-        id: 2,
-        nombres: "Sandra",
-        apellisdos: "Mora",
-        telefono: 3154852563,
-        ubicacion: {
-            ciudad: "Colombia",
-            direccion: ""
-        },
-    },
-    {
-        id: 3,
-        nombres: "Sandra",
-        apellisdos: "Mora",
-        telefono: 3154852563,
-        ubicacion: {
-            ciudad: "Colombia",
-            direccion: ""
-        },
+// Crear un nuevo elemento 
+document.getElementById("form").addEventListener("submit",crear);
+
+let contactos = JSON.parse(localStorage.getItem("contactos"));
+console.log(contactos);
+
+function crear(e){
+    nombre = document.getElementById("nombre").value
+    apellido = document.getElementById("apellido").value
+    telefono = document.getElementById("telefono").value
+    ubicacion = document.getElementById("ubicacion").value
+    Id = Math.random(1,100)
+
+    let contacto = {
+        nombre,
+        apellido,
+        telefono,
+        ubicacion
     }
-];
-console.log("Esta es mi lista de contactos: ", contactos);
 
+    if(localStorage.getItem("contactos") === null){
+        let contactos = []
+        contactos.push(contacto)
+        localStorage.setItem("contactos",JSON.stringify(contactos))
+    }else{
+        let contactos = localStorage.getItem(JSON.parse("contactos"))
+        contactos.push(contacto)
+        localStorage.setItem("contactos",JSON.stringify(contactos))
+    }
+    mostrar();
+    document.getElementById("form").reset();
+    console.log("Contacto guardado");
+    e.preventDefault()
+}
 
-//Ajusta las funciones de crear un contacto para que puedan almacenar información como objetos
-function add (contactos){
-    contactos.push(
-        {
-        id: 4,
-        nombres: "Liam",
-        apellisdos: "Arias",
-        telefono: 3124457895,
-        ubicacion: {
-            ciudad: "Colombia",
-            direccion: "Calle las margaritas 50 #30 sur"
-            }
-        },
-        {
-        id: 5,
-        nombres: "Leidy",
-        apellisdos: "Duarte",
-        telefono: 3135448595,
-        ubicacion: {
-        ciudad: "Colombia",
-        direccion: "Carrera 100, #30"
-            }
+function mostrar(){
+    document.getElementById("tbody").innerHTML = ""
+    for (let i = 0; i < contactos.length; i++){
+        let nombre = contactos[i].nombre;
+        let apellido = contactos[i].apellido;
+        let telefono = contactos[i].telefono;
+        let ubicacion = contactos[i].ubicacion;
+
+        console.log(nombre);
+        console.log(apellido);
+        console.log(telefono);
+        console.log(ubicacion);
+
+        document.getElementById("tbody").innerHTML += 
+        `<tr>
+            <td>${nombre}</td>
+            <td>${apellido}</td>
+            <td>${telefono}</td>
+            <td>${ubicacion}</td>
+            <td><button onclick="editar('${nombre}')"><i class="fa-solid fa-user-pen  fa-2x" style="color: #0008ff;"></i></button></td>
+            <td><button onclick="eliminar('${(nombre)}')"><i class="fa-solid fa-user-minus fa-2x" style="color: #ff0000;"></i></button></td>
+        </tr>`
+    }
+}
+
+// Editar elemento creado
+function editar(nombre){
+    for (let i = 0; i < contactos.length; i++) {
+        if (contactos[i].nombre === nombre) {
+            document.getElementById("padre").innerHTML = `
+            <h1>EDITAR CONTACTO</h1>
+            <div id="hijo1">
+                <div class="cajas">
+                    <form>
+                        <div class="formulario">
+                            <label for="">Nombre</label><div id="errorNom"></div>
+                            <input id="newNombre" type="text" class="inputForm" placeholder="${contactos[i].nombre}">
+                            <span class="linea"></span>
+                        </div>
+                        <div class="formulario">
+                            <label for="">Apellidos</label><div id="errorApe"></div>
+                            <input id="newApellido" type="text" class="inputForm" placeholder="${contactos[i].apellido}">
+                            <span class="linea"></span>
+                        </div>
+                        <div class="formulario">
+                            <label for="">Teléfono</label><div id="errorTel"></div>
+                            <input id="newTelefono" type="text" maxlength="10" class="inputForm" placeholder="${contactos[i].telefono}">
+                            <span class="linea"></span>
+                        </div>
+                        <div class="formulario">
+                            <label for="">Ubicación</label><div id="errorUbi"></div>
+                            <input id="newUbicacion" type="text" class="inputForm" placeholder="${contactos[i].ubicacion}">
+                            <span class="linea"></span>
+                        </div>
+                        <button id="botonAdd" onclick="actualizar('${i}')"><i class="fa-solid fa-user-plus fa-2x" style="color:#00ff40;"></i></button>   
+                        <button id="botonAdd">Cancelar</button>   
+                    </form>
+                </div>`
+        } 
+    }
+}
+
+function actualizar(i){
+    contactos[i].nombre = document.getElementById("newNombre").value;
+    contactos[i].apellido = document.getElementById("newApellido").value;
+    contactos[i].telefono = document.getElementById("newTelefono").value;
+    contactos[i].ubicacion = document.getElementById("newUbicacion").value;
+
+    if(contactos[i].nombre == ""){
+        alert("Ingrese nombre del contacto")
+    }else if(contactos[i].apellido == "") {
+        alert("Ingrese apellido del contacto")
+    }else if(contactos[i].telefono == ""){
+        alert("Ingrese telefono del contacto")
+    }else if(contactos[i].ubicacion == ""){
+        alert("Ingrese ubicación del contacto")
+    }else{
+    localStorage.setItem("contactos",JSON.stringify(contactos));
+    }
+}
+
+// Eliminar elemento creado 
+function eliminar(nombre){
+    for (let i = 0; i < contactos.length; i++) {
+        if(contactos[i].nombre === nombre){
+            localStorage.removeItem("contactos");
         }
-    );
-    return contactos;
-}
-console.log("Esta es mi lista con 2 contactos nuevos", add(contactos));
+    }
 
-//Crear contacto al principio de mi lista
-function add1 (contactos){
-    contactos.unshift(
-        {
-            id: 0,
-            nombres: "Sofia",
-            apellisdos: "Neira",
-            telefono: 3004587456,
-            ubicacion: {
-            ciudad: "Colombia",
-            direccion: "N/A"
-                }
+    localStorage.setItem("contactos",JSON.stringify(contactos));
+    mostrar();
+}
+
+mostrar();
+
+// Creando función buscar-pendiente
+document.getElementById("inputBuscar").addEventListener("keyup", buscar);
+
+function buscar() {
+    let filter = crear().value.toUpperCase();
+    let storing = mostrar().getElementByTagName("storing");
+
+    for (let i = 0; i < storing.length; i++) {
+        let td = storing[i].getElementByTagName("td")[0];
+        let text = td.textContent || td.innerText
+
+        if(text.toUpperCase().indexOf(filter)>-1){
+            td[i].style.display = "";
+        }else{
+
         }
-    );
-    return contactos;
+        
+    }
 }
-console.log("Nuevo contacto al principio de mi lista", add1(contactos));
-
-//Ajusta las funciones de eliminar un contacto para que puedan almacenar información como objetos
-function remove (contactos){
-    contactos.pop();
-    return contactos;
-}
-console.log("Elimine el ultimo contacto de mi lista", remove(contactos));
-
-// Eliminar y mostrar contacto eliminado 
-const mostrarEliminado = contactos.pop();
-console.log("Elimine otro contacto y este es el que fue eliminado: ", mostrarEliminado);
-
-// Eliminar primer contacto y mostrar lista 
-const eliminarPrimerC = contactos.shift();
-console.log("Elimine el primer contacto y este es:", eliminarPrimerC);
-
-//Cuarto punto - imprimir lista
-function imprimeContacto (){
-    return contactos;
-}
-console.log("Asi quedo mi lista", imprimeContacto());
-
-// Imprimir lista con add de nuevo contacto
-const imprimir2 = (contactos)=>{
-    contactos.push(
-        {
-            id: 6,
-            nombres: "Luis David",
-            apellisdos: "Nuñez",
-            telefono: 3132554857,
-            ubicacion: {
-                ciudad: "Colombia",
-                direccion: "Barrio Timiza calle 3"
-                }
-        },
-    );
-    return contactos;
-}
-console.log("Esta es mi lista con otra funcion de imprimir y agregar contacto", imprimir2(contactos));
