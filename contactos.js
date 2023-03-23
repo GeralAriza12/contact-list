@@ -1,7 +1,10 @@
 // Crear un nuevo elemento 
 document.getElementById("form").addEventListener("submit",crear);
 
-let contactos = JSON.parse(localStorage.getItem("contactos"));
+let contactos = []
+if (localStorage.getItem("contactos") !==null) {
+    contactos = JSON.parse(localStorage.getItem("contactos"))
+}
 console.log(contactos);
 
 function crear(e){
@@ -9,7 +12,6 @@ function crear(e){
     apellido = document.getElementById("apellido").value
     telefono = document.getElementById("telefono").value
     ubicacion = document.getElementById("ubicacion").value
-    Id = Math.random(1,100)
 
     let contacto = {
         nombre,
@@ -19,11 +21,11 @@ function crear(e){
     }
 
     if(localStorage.getItem("contactos") === null){
-        let contactos = []
+        contactos = []
         contactos.push(contacto)
         localStorage.setItem("contactos",JSON.stringify(contactos))
     }else{
-        let contactos = localStorage.getItem(JSON.parse("contactos"))
+        contactos = JSON.parse(localStorage.getItem("contactos")) 
         contactos.push(contacto)
         localStorage.setItem("contactos",JSON.stringify(contactos))
     }
@@ -119,6 +121,7 @@ function eliminar(nombre){
     for (let i = 0; i < contactos.length; i++) {
         if(contactos[i].nombre === nombre){
             localStorage.removeItem("contactos");
+            contactos.splice(i,1)
         }
     }
 
